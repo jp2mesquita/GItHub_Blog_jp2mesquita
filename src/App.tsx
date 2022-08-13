@@ -1,8 +1,15 @@
+import { ThemeProvider } from "styled-components";
+import { Home } from "./pages/Home/intex";
+import { GlobalStyle } from "./styles/global";
+import { defaultTheme } from "./styles/themes/default";
+
 export function App() {
   
-
   return (
-    <h1>Hello World</h1>
+    <ThemeProvider theme={defaultTheme}>
+      <GlobalStyle />
+      <Home />
+    </ThemeProvider>
   )
 }
 
