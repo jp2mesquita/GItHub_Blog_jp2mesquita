@@ -12,14 +12,18 @@ export const HeaderContainer = styled.header`
 
   background: #0B1B2B;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
 `
 
 export const HeaderContent = styled.div`
   padding-top: 4rem;
   padding-bottom: 8.375rem;
 
+  
+  
   img{
     width: 9.25rem;
     height: 6.125rem;
   }
+
 `
