@@ -99,6 +99,13 @@ export const PostContainer = styled.main`
     max-width: 864px;
     padding: 2.5rem 2rem;
 
+    h2, h3, h4{
+      margin: 1rem 0;
+    }
+    ul{
+      margin-top: .5rem;
+    }
+
     img{
       margin-top: 1.5rem;
     }

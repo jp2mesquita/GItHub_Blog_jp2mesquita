@@ -43,8 +43,14 @@ export const PublishesWrapper = styled.div`
   a{
     text-decoration: none;
     p{
+      text-align: justify;
       color: ${(props) => props.theme["base-text"]};
-    }
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 5; 
+      -webkit-box-orient: vertical
+}
   }
 `
 

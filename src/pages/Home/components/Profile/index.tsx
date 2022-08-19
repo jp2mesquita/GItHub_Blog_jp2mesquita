@@ -4,32 +4,40 @@ import avatar from '../../../../assets/avatar.png'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
 // import {solid, regular, brands} from '@fortawesome/fontawesome-svg-core/import.macro'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
-import { faBuilding, faUserGroup, faArrowUpRightFromSquare} from '@fortawesome/free-solid-svg-icons'
+import { faBuilding, faUserGroup, faArrowUpRightFromSquare, faRocket} from '@fortawesome/free-solid-svg-icons'
+import { useContext, useEffect, useState } from "react";
+import { api } from "../../../../lib/axios";
+import axios from "axios";
+import { PostContext } from "../../../../contexts/PostsContext";
+
 
 
 export function Profile() {
+
+  const { profileData } = useContext(PostContext)
+
   return (
     <ProfileContainer>
       <ProfileContent >
-        <img src={avatar} alt="" />
+        <img src={profileData.avatar_url} alt="" />
         <ProfileSummary>
 
-          <h1>Cameron Williansom </h1>
+          <h1>{profileData.name}</h1>
 
           <span>
-            <a href="https://github.com" target="_blank"> 
+            <a href="https://github.com/jp2mesquita" target="_blank"> 
               github
               <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
             </a>
            
           </span>
 
-          <p>Tristique volutpat pulvinar vel massa, pellentesque egestas. Eu viverra massa quam dignissim aenean malesuada suscipit. Nunc, volutpat pulvinar vel mass.</p>
+          <p>{profileData.bio}</p>
 
           <ul>
             <li>
               <FontAwesomeIcon icon={faGithub}  />
-              Cameronwll
+              {profileData.login}
             </li>
             <li>
               <FontAwesomeIcon icon={faBuilding} /> 
@@ -37,7 +45,7 @@ export function Profile() {
             </li>
             <li>
               <FontAwesomeIcon icon={faUserGroup} />
-              32 Seguidores
+              {profileData.followers} Seguidores
             </li>
           </ul>
 

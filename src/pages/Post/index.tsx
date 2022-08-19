@@ -1,15 +1,27 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 import {  faArrowUpRightFromSquare, faBuilding, faCalendarDay, faChevronLeft, faComment, faUserGroup } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
+import ReactMarkdown from 'react-markdown'
 
 import { Header } from "../../components/Header";
 
 import code from '../../assets/code.png'
 
 import { BoxLinks, PageResumeBox, PostContainer, PostResume, ProfPageResumeBoxContent } from "./styles";
+import { useContext } from 'react';
+import { PostContext } from '../../contexts/PostsContext';
 
 export function Post(){
+
+  const { issueNumber } = useParams()
+
+  const { posts, profileData } = useContext(PostContext)
+
+  const postNumber = Number(issueNumber)
+
+  const post = posts[postNumber -1]
+
   return(
     <>
     <Header />
@@ -27,7 +39,7 @@ export function Post(){
           </span>
 
           <span>
-            <a href="https://github.com/jp2mesquita" target="_blank">
+            <a href={ post.html_url }target="_blank">
               ver no github
               <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
             </a>
@@ -35,12 +47,12 @@ export function Post(){
         </BoxLinks>
 
         <PostResume>
-          <h1>JavaScript data types and data structures</h1>
+          <h1>{post.title}</h1>
 
           <ul>
             <li>
               <FontAwesomeIcon icon={faGithub}  />
-              Cameronwll
+              {profileData.login}
             </li>
             <li>
               <FontAwesomeIcon icon={faCalendarDay} /> 
@@ -60,18 +72,9 @@ export function Post(){
 
       <PostContainer>
         <div>
-          <p>
-            <strong>Programming languages all have built-in data structures, but these often differ from one language to another.</strong> This article attempts to list the built-in data structures available in JavaScript and what properties they have. These can be used to build other data structures. Wherever possible, comparisons with other languages are drawn.
-
-            <br />
-            <br />
-            <strong> Dynamic typing </strong>
-            <br />
-            JavaScript is a loosely typed and dynamic language. Variables in JavaScript are not directly associated with any particular value type, and any variable can be assigned (and re-assigned) values of all types:
-          </p>
-          
-          <img src={code} alt="" />
-
+          <ReactMarkdown>
+            {post.body}
+          </ReactMarkdown>
         </div>
 
       </PostContainer>
