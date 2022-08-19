@@ -1,27 +1,45 @@
 import { NavLink, useParams } from 'react-router-dom'
-import {  faArrowUpRightFromSquare, faBuilding, faCalendarDay, faChevronLeft, faComment, faUserGroup } from "@fortawesome/free-solid-svg-icons";
+import {  faArrowUpRightFromSquare, faBuilding, faCalendarDay, faChevronLeft, faComment} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import ReactMarkdown from 'react-markdown'
+import { formatDistanceToNow } from 'date-fns'
 
 import { Header } from "../../components/Header";
 
-import code from '../../assets/code.png'
 
 import { BoxLinks, PageResumeBox, PostContainer, PostResume, ProfPageResumeBoxContent } from "./styles";
-import { useContext } from 'react';
-import { PostContext } from '../../contexts/PostsContext';
+import { useContext, useEffect, useState } from 'react';
+import { PostContext, PostProps } from '../../contexts/PostsContext';
+import { api } from '../../lib/axios';
+
 
 export function Post(){
 
   const { issueNumber } = useParams()
 
-  const { posts, profileData } = useContext(PostContext)
+  const { getPosts, profileData } = useContext(PostContext)
 
-  const postNumber = Number(issueNumber)
+  const [post, setPost] = useState<PostProps>({} as PostProps)
+ 
+  
+  
 
-  const post = posts[postNumber -1]
 
+  async function getCompletePost(){
+    const response = await api.get(`/repos/jp2mesquita/GItHub_Blog_jp2mesquita/issues/${issueNumber}`)
+
+    setPost(response.data)
+  }
+
+  useEffect(() => {
+    getCompletePost()
+  }, [])
+
+  
+
+ 
+  // console.log(createdAt)
   return(
     <>
     <Header />
@@ -31,7 +49,7 @@ export function Post(){
       <ProfPageResumeBoxContent>
         <BoxLinks>
           <span>
-            <NavLink to={'/'}>
+            <NavLink to={'/'} onClick={ () => getPosts('')}>
               <FontAwesomeIcon icon={faChevronLeft}/>
               voltar
 

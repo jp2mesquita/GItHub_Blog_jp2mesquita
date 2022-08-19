@@ -2,12 +2,15 @@ import axios from "axios";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { api } from "../lib/axios";
 
-interface PostProps{
-  title: string,
-  body: string,
-  number: number,
-  html_url: string,
+export interface PostProps{
+  
+    title: string,
+    body: string,
+    number: number,
+    html_url: string,
+
 }
+
 
 interface ProfileDataProps{
   name: string,
@@ -20,7 +23,8 @@ interface ProfileDataProps{
 
 interface PostContextType{
   posts: PostProps[],
-  profileData: ProfileDataProps
+  profileData: ProfileDataProps,
+  getPosts: ( query?: string ) => Promise<void>
 
 }
 
@@ -35,14 +39,15 @@ export function PostProvider( {children}: PostProviderProps){
 
   const [ posts, setPosts ] = useState<PostProps[]>([])
 
-  async function getPosts( query?: string){
-    const response = await api.get("/repos/jp2mesquita/GItHub_Blog_jp2mesquita/issues", {
+  async function getPosts( query?: string ){
+    const response = await api.get("search/issues", {
       params: {
-        q: query,
+        q: `repo:jp2mesquita/GItHub_Blog_jp2mesquita ${query}`  ,
       }
     })
-
-    setPosts(response.data)
+    const items = response.data.items
+    console.log(items)
+    setPosts(items)
 
   }
 
@@ -59,16 +64,16 @@ export function PostProvider( {children}: PostProviderProps){
 
   useEffect( () => {
     getProfileInfo()
-    getPosts()
+    getPosts('')
 
-    
   }, [])
 
   return(
     <PostContext.Provider
       value={{
         posts,
-        profileData
+        profileData,
+        getPosts
       }}
     >
       {children}

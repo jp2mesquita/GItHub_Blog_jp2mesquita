@@ -11,5 +11,6 @@ export const SearchFormContainer = styled.form`
     background: ${(props) => props.theme["base-input"]};
     border: 1px solid ${(props) => props.theme["base-border"]};
     border-radius: 6px;
+    color: ${(props) => props.theme["base-title"]};
   }
 `
