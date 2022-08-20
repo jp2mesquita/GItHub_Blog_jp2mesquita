@@ -7,6 +7,7 @@ import { PostContext } from "../../../../contexts/PostsContext";
 
 import { SearchFormContainer } from "./styles";
 import { useForm } from "react-hook-form";
+import { useContextSelector } from "use-context-selector";
 
 
 
@@ -19,7 +20,9 @@ type SearchFormInput = z.infer<typeof searchFormSchema>
 
 export function SerachForm(){
 
-  const { getPosts } = useContext(PostContext)
+  const getPosts = useContextSelector(PostContext, (context) =>{
+    return context.getPosts
+  })
 
   const { 
     register, 

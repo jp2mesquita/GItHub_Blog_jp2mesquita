@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { ThemeConsumer } from "styled-components";
 
 export const SearchFormContainer = styled.form`
   display: flex;
@@ -12,5 +12,14 @@ export const SearchFormContainer = styled.form`
     border: 1px solid ${(props) => props.theme["base-border"]};
     border-radius: 6px;
     color: ${(props) => props.theme["base-title"]};
+
+    &:focus {
+      border-color: ${(props) => props.theme.blue};
+      outline: none;
+    }
+
+    &::placeholder{
+      color: ${(props) => props.theme["base-label"]}
+    }
   }
 `

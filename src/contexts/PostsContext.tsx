@@ -1,5 +1,6 @@
 import axios from "axios";
-import { createContext, ReactNode, useEffect, useState } from "react";
+import {  ReactNode, useEffect, useState, useCallback } from "react";
+import { createContext } from "use-context-selector";
 import { api } from "../lib/axios";
 
 export interface PostProps{
@@ -10,7 +11,6 @@ export interface PostProps{
     html_url: string,
 
 }
-
 
 interface ProfileDataProps{
   name: string,
@@ -39,27 +39,30 @@ export function PostProvider( {children}: PostProviderProps){
 
   const [ posts, setPosts ] = useState<PostProps[]>([])
 
-  async function getPosts( query?: string ){
-    const response = await api.get("search/issues", {
-      params: {
-        q: `repo:jp2mesquita/GItHub_Blog_jp2mesquita ${query}`  ,
-      }
-    })
-    const items = response.data.items
-    console.log(items)
-    setPosts(items)
-
-  }
-
+  const getPosts = useCallback(
+    async( query?: string ) => {
+      const response = await api.get("search/issues", {
+        params: {
+          q: `repo:jp2mesquita/GItHub_Blog_jp2mesquita ${query}`  ,
+        }
+      })
+      const items = response.data.items
+      setPosts(items)
+  
+    },
+    []
+  )
   const [profileData, setProfileData ] = useState({} as ProfileDataProps)
 
-  async function getProfileInfo() {
+  const getProfileInfo = useCallback(
+    async () => {
 
-    const response = await api.get('/users/jp2mesquita',)
-
-    setProfileData(response.data)
-  }
-
+      const response = await api.get('/users/jp2mesquita',)
+  
+      setProfileData(response.data)
+    },
+    []
+  )
 
 
   useEffect( () => {

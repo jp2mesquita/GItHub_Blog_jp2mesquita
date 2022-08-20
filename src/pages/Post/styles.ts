@@ -105,7 +105,9 @@ export const PostContainer = styled.main`
     ul{
       margin-top: .5rem;
     }
-
+    p{
+      margin-bottom: .5rem;
+    }
     img{
       margin-top: 1.5rem;
     }

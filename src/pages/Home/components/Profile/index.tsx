@@ -5,16 +5,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import {solid, regular, brands} from '@fortawesome/fontawesome-svg-core/import.macro'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import { faBuilding, faUserGroup, faArrowUpRightFromSquare, faRocket} from '@fortawesome/free-solid-svg-icons'
-import { useContext, useEffect, useState } from "react";
-import { api } from "../../../../lib/axios";
-import axios from "axios";
+
 import { PostContext } from "../../../../contexts/PostsContext";
+import { useContextSelector } from "use-context-selector";
 
 
 
 export function Profile() {
 
-  const { profileData } = useContext(PostContext)
+  const profileData = useContextSelector(PostContext, (context) => {
+    return context.profileData
+  })
 
   return (
     <ProfileContainer>

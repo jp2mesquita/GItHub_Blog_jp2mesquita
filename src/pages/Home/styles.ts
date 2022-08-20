@@ -62,19 +62,26 @@ export const PublishCard = styled.div`
 
   background: ${(props) => props.theme["base-post"]};
   border-radius: 10px;
+  border: 2px solid ${(props) => props.theme["base-post"]};
+
+  transition: .2s;
+
+  &:hover{
+    border-color: ${(props) => props.theme["base-label"]};
+  }
 
   div{
     display: grid;
     grid-template-columns: 17.5rem 1fr;
 
     h2{
-      /* width: 280px; */
       font: 700 1.25rem Nunito, sans-serif;
       line-height: 160%;
       color: ${(props) => props.theme["base-title"]};
     }
     p{
       color: ${(props) => props.theme["base-text"]};
+     
     }
     span{
       margin-top: .4rem;

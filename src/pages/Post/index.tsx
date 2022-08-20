@@ -3,7 +3,6 @@ import {  faArrowUpRightFromSquare, faBuilding, faCalendarDay, faChevronLeft, fa
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import ReactMarkdown from 'react-markdown'
-import { formatDistanceToNow } from 'date-fns'
 
 import { Header } from "../../components/Header";
 
@@ -12,34 +11,42 @@ import { BoxLinks, PageResumeBox, PostContainer, PostResume, ProfPageResumeBoxCo
 import { useContext, useEffect, useState } from 'react';
 import { PostContext, PostProps } from '../../contexts/PostsContext';
 import { api } from '../../lib/axios';
+import { useContextSelector } from 'use-context-selector';
 
+interface Props extends PostProps {
+  created_at: Date
+}
 
 export function Post(){
 
   const { issueNumber } = useParams()
 
-  const { getPosts, profileData } = useContext(PostContext)
+  const getPosts = useContextSelector(PostContext, (context) => {
+    return context.getPosts
+  })
 
-  const [post, setPost] = useState<PostProps>({} as PostProps)
+  const  profileData = useContextSelector(PostContext, (context) => {
+    return context.profileData
+  })
  
-  
-  
+  const [post, setPost] = useState<Props>({} as Props)
 
 
   async function getCompletePost(){
     const response = await api.get(`/repos/jp2mesquita/GItHub_Blog_jp2mesquita/issues/${issueNumber}`)
 
+ 
     setPost(response.data)
   }
 
+ 
   useEffect(() => {
     getCompletePost()
+ 
   }, [])
 
-  
 
- 
-  // console.log(createdAt)
+
   return(
     <>
     <Header />
@@ -73,7 +80,8 @@ export function Post(){
               {profileData.login}
             </li>
             <li>
-              <FontAwesomeIcon icon={faCalendarDay} /> 
+              <FontAwesomeIcon icon={faCalendarDay} />
+               
               Há 1 dia
             </li>
             <li>
@@ -90,7 +98,7 @@ export function Post(){
 
       <PostContainer>
         <div>
-          <ReactMarkdown>
+          <ReactMarkdown linkTarget='_blank'>
             {post.body}
           </ReactMarkdown>
         </div>
